@@ -214,10 +214,10 @@ open class CircleColorPickerView: UIView {
         }
         
         colorBubbleView.setBubbleColor(color: colorWithOnlyHue)
-        saturationPickerView?.backgroundColor = colorWithOnlyHue
-        brightnessPickerView?.backgroundColor = colorWithOnlyHue
-        saturationPickerView?.bubbleView.backgroundColor = colorWithSaturation
-        brightnessPickerView?.bubbleView.backgroundColor = colorWithBrightness
+        saturationPickerView?.backgroundColor = colorWithBrightness
+        brightnessPickerView?.backgroundColor = colorWithSaturation
+        saturationPickerView?.bubbleView.backgroundColor = color
+        brightnessPickerView?.bubbleView.backgroundColor = color
     }
     
     private func setBubbleAngleForCurrentHue(){

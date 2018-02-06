@@ -11,22 +11,30 @@ import UIKit
 open class BrightnessPickerView: LinearPickerView {
 
     open override func handleOrientationChange() {
-        (frontLayerView as! BrightnessMask).isVertical = isVertical
+        (frontLayerView as! BrightnessGradient).isVertical = isVertical
     }
     
     open override func createFrontLayerView() -> UIView{
-        let frontLayer = BrightnessMask(frame: CGRect.init(origin: CGPoint.zero, size: self.bounds.size))
+        let frontLayer = BrightnessGradient(frame: CGRect.init(origin: CGPoint.zero, size: self.bounds.size))
         frontLayer.isVertical = isVertical
         return frontLayer
     }
+
+    open override func updateFrontLayerView() {
+        let brightnessGradient = self.frontLayerView as? BrightnessGradient
+        brightnessGradient?.backgroundColor = self.backgroundColor
+        brightnessGradient?.setNeedsLayout()
+    }
     
-    class BrightnessMask: UIView {
+    class BrightnessGradient: UIView {
         public var isVertical = false
         
         func drawScale(context: CGContext){
+            var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            self.backgroundColor?.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
             
-            let startColor = UIColor.init(hue: 1, saturation: 0, brightness: 0, alpha: 1).cgColor
-            let endColor   = UIColor.init(hue: 1, saturation: 0, brightness: 0, alpha: 0).cgColor
+            let startColor = UIColor.init(hue: h, saturation: s, brightness: 0, alpha: 1).cgColor
+            let endColor   = UIColor.init(hue: h, saturation: s, brightness: 1, alpha: 1).cgColor
             
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             let colors = [startColor, endColor] as CFArray

@@ -41,6 +41,12 @@ open class LinearPickerView: UIView {
         }
         
     }
+
+    open override var backgroundColor: UIColor? {
+        didSet {
+            self.updateFrontLayerView()
+        }
+    }
     
     @IBOutlet var contentView: UIView!
     @IBOutlet open weak var bubbleView: UIImageView!
@@ -96,6 +102,10 @@ open class LinearPickerView: UIView {
         
         contentView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(contentView!)
+    }
+
+    open func updateFrontLayerView() {
+        print("Subclasses of LinearPickerView should override updateFrontLayerView() function.")
     }
     
     open func handleOrientationChange() {
